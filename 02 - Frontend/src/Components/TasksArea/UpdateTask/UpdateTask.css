@@ -1,0 +1,20 @@
+.UpdateTask > form {
+	width: 250px;
+}
+
+.UpdateTask input {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 0 20px 0;
+}
+
+.UpdateTask button {
+    width: 100%;
+    margin: 10px 0 20px 0;
+}
+
+.UpdateTask span {
+    color: red;
+    margin: 0 20px;
+    position: absolute;
+}
