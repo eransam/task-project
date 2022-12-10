@@ -46,7 +46,7 @@ router.post("/tasks", async (request: Request, response: Response, next: NextFun
 router.post("/tasks2", async (request: Request, response: Response, next: NextFunction) => {
     try {
         const task = new TaskModel(request.body);
-        console.log("task in the task controller: " ,task);
+        console.log("task2 in the task controller: " ,task);
         const addedTasks = await logic.updateFullTask(task)
         response.status(201).json(addedTasks);
     }
@@ -62,9 +62,11 @@ router.put("/tasks/:id", async (request: Request, response: Response, next: Next
     try {
         const id = +request.params.id;
         request.body.id = id;
-        const product = new TaskModel(request.body);
-        const updatedProduct = await logic.updateFullTask(product);
-        response.json(updatedProduct);
+        request.body.image = request.files?.image;
+
+        const task = new TaskModel(request.body);
+        const updatedTask = await logic.updateFullTask(task);
+        response.json(updatedTask);
     }
     catch (err: any) {
         next(err);

@@ -16,8 +16,8 @@ function AddTask(): JSX.Element {
     async function submit(Task: TaskModel) {
         try {
             const thedate = new Date;
-            // const stringDate = thedate.toString()
-            // Task.creationDate= stringDate;
+            const stringDate = thedate.toString()
+            Task.creationDate= stringDate;
             // console.log("Task: " ,Task);
             // Task.Description ="test";
             // Task.RelatedTickets ="test";

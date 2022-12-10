@@ -1,15 +1,19 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import TaskModel from "../../../Models/TaskModel";
+import store from "../../../Redux/Store";
 import notify from "../../../Services/NotifyService";
 import tasksService from "../../../Services/TaskService";
 import "./UpdateTask.css";
 
 function UpdateTask(): JSX.Element {
 
+    const [user, setUser] = useState<any>(store.getState().authState.user);
+
     const params = useParams();
     const id = +params.id;
+    var imgName:string = "";
 
     const navigate = useNavigate();
 
@@ -18,11 +22,22 @@ function UpdateTask(): JSX.Element {
     useEffect(() => {
         tasksService.getOneTask(id)
             .then(task => {
+                imgName = task.imageName;
                 setValue("title", task.title);
                 setValue("assigneeName", task.assigneeName);
                 setValue("creationDate", task.creationDate);
                 setValue("status", task.status);
+                setValue("RelatedTickets", task.RelatedTickets);
+                setValue("Description", task.Description);
 
+
+                const unsubscribe = store.subscribe(() => {
+                    setUser(store.getState().authState.user);
+                  });
+            
+                  return () => {
+                    unsubscribe();
+                  };
             })
             .catch(err => notify.error(err));
     }, []);
@@ -31,7 +46,7 @@ function UpdateTask(): JSX.Element {
         try {
 
             task.id = id;
-            await tasksService.updateTask(task);
+            const updatedTask =  await tasksService.updateTask(task);
 
             notify.success("Task updated.");
 
@@ -75,10 +90,25 @@ function UpdateTask(): JSX.Element {
                 })} />
                 <span>{formState.errors.status?.message}</span>
 
+                <label>Description: </label>
+                <input type="text" {...register("Description", {
+                    required: { value: true, message: "Missing task Description" }
+                })} />
+                <span>{formState.errors.Description?.message}</span>
+
+                <label>RelatedTickets: </label>
+                <input type="text" {...register("RelatedTickets", {
+                    required: { value: true, message: "Missing task RelatedTickets" }
+                })} />
+                <span>{formState.errors.RelatedTickets?.message}</span>
+
+
                 <label>Image: </label>
                 <input type="file" accept="image/*" {...register("image")} />
 
                 <button>Update</button>
+                <button onClick={() => navigate(-1)}>Back</button>
+
 
             </form>
 

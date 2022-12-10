@@ -23,7 +23,7 @@ async function getAllTasks(): Promise<TaskModel[]> {
 
 async function getOneTask(id: number): Promise<TaskModel> {
     const sql = `SELECT 
-                    TaskID AS id,
+                    TaskID,
                     Title,
                     AssigneeName,
                     CreationDate,
@@ -75,12 +75,31 @@ async function updateFullTask(task: TaskModel): Promise<TaskModel> {
 
     const errors = task.validatePut();
     if (errors) throw new ErrorModel(400, errors);
+    console.log("we in the updateFullTask");
+    
 
+    if (task.image) {
+        console.log("PUT. Have image! logic");
+        const extension = task.image.name.substring(
+            task.image.name.lastIndexOf(".")
+        );
+        task.imageName = uuid() + extension;
+        await task.image.mv(
+          "./src/assets/images/tasks/" + task.imageName
+        );
+        delete task.image;
+      }
+
+
+
+      console.log("task in the updateFullTask in task logic: " , task);
+      
     const sql = `UPDATE tasks SET
                  Title = '${task.title}',
                  AssigneeName = '${task.assigneeName}',
                  Description = '${task.Description}',
                  RelatedTickets = '${task.RelatedTickets}',
+                 imageName = '${task.imageName}',
                  Status = '${task.status}'
                  WHERE TaskID = ${task.id}`;
 
