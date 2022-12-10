@@ -15,15 +15,21 @@ function AddTask(): JSX.Element {
 
     async function submit(Task: TaskModel) {
         try {
-
-            console.log("Task: " ,Task);
+            const thedate = new Date;
+            // const stringDate = thedate.toString()
+            // Task.creationDate= stringDate;
+            // console.log("Task: " ,Task);
+            // Task.Description ="test";
+            // Task.RelatedTickets ="test";
+            // Task.status = "test";
+            // console.log("Task eran: " ,Task);
             
             await TasksService.addNewTask(Task);
             
             notify.success("Task has been added!");
 
             // Navigate back to all Tasks: 
-            navigate("/Tasks");
+            navigate("/AddTask2");
         }
         catch (err: any) {
             notify.error(err);
@@ -52,22 +58,11 @@ function AddTask(): JSX.Element {
 
 
 
-
-
-                <label>creationDate: </label>
-                <input type="text" {...register("creationDate", {
-                    required: { value: true, message: "Missing Task creationDate" }
-                })} />
-                <span>{formState.errors.creationDate?.message}</span>
-
-
-
-
-                <label>status: </label>
+                {/* <label>status: </label>
                 <input type="text" {...register("status", {
                     required: { value: true, message: "Missing Task status" }
                 })} />
-                <span>{formState.errors.status?.message}</span>
+                <span>{formState.errors.status?.message}</span> */}
 
 
                 <label>Image: </label>

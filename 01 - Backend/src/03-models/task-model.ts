@@ -10,6 +10,8 @@ class TaskModel {
     public status: string;
     public image: UploadedFile;
     public imageName: string;
+    public Description: string;
+    public RelatedTickets: string;
 
     public constructor(task: TaskModel) {
         this.id = task.id;
@@ -19,15 +21,19 @@ class TaskModel {
         this.status = task.status;
         this.imageName = task.imageName;
         this.image = task.image;
+        this.Description = task.Description;
+        this.RelatedTickets = task.RelatedTickets;
 
     }
 
     private static postSchema = Joi.object({
         id: Joi.forbidden(),
-        title: Joi.string().required().min(2).max(100),
-        assigneeName: Joi.string().required().min(2).max(100),
-        creationDate: Joi.string().required().min(2).max(100),
-        status: Joi.string().required().min(2).max(100),
+        title: Joi.string().optional(),
+        Description: Joi.string().optional(),
+        RelatedTickets: Joi.string().optional(),
+        assigneeName: Joi.string().optional(),
+        creationDate: Joi.string().optional(),
+        status: Joi.string().optional(),
         imageName: Joi.string().optional(),
         image: Joi.object().optional()
 
@@ -35,10 +41,12 @@ class TaskModel {
 
     private static putSchema = Joi.object({
         id: Joi.number().required().integer().min(1),
-        title: Joi.string().required().min(2).max(100),
-        assigneeName: Joi.string().required().min(2).max(100),
-        creationDate: Joi.string().required().min(2).max(100),
-        status: Joi.string().required().min(2).max(100),
+        title: Joi.string().optional().min(2).max(100),
+        Description: Joi.string().optional().min(2).max(100),
+        RelatedTickets: Joi.string().optional().min(2).max(100),
+        assigneeName: Joi.string().optional().min(2).max(100),
+        creationDate: Joi.string().optional().min(2).max(100),
+        status: Joi.string().optional().min(2).max(100),
         image: Joi.object().optional(),
         imageName: Joi.string().optional()
         
@@ -46,7 +54,8 @@ class TaskModel {
 
     private static patchSchema = Joi.object({
         id: Joi.number().required().integer().min(1),
-
+        Description: Joi.string().optional().min(2).max(100),
+        RelatedTickets: Joi.string().optional().min(2).max(100),
         title: Joi.string().optional().min(2).max(100),
         assigneeName: Joi.string().optional().min(2).max(100),
         creationDate: Joi.string().optional().min(2).max(100),

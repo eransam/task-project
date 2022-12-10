@@ -27,16 +27,36 @@ router.get("/tasks/:id", async (request: Request, response: Response, next: Next
 
 router.post("/tasks", async (request: Request, response: Response, next: NextFunction) => {
     try {
+
         request.body.image = request.files?.image;
+
         const task = new TaskModel(request.body);
         console.log("task in the task controller: " ,task);
+
         const addedTasks = await logic.addTask(task)
+
         response.status(201).json(addedTasks);
     }
     catch (err: any) {
         next(err);
     }
 });
+
+
+router.post("/tasks2", async (request: Request, response: Response, next: NextFunction) => {
+    try {
+        const task = new TaskModel(request.body);
+        console.log("task in the task controller: " ,task);
+        const addedTasks = await logic.updateFullTask(task)
+        response.status(201).json(addedTasks);
+    }
+    catch (err: any) {
+        next(err);
+    }
+});
+
+
+
 
 router.put("/tasks/:id", async (request: Request, response: Response, next: NextFunction) => {
     try {

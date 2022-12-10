@@ -1,0 +1,20 @@
+.AddTask > form {
+	width: 250px;
+}
+
+.AddTask input {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 0 20px 0;
+}
+
+.AddTask button {
+    width: 100%;
+    margin: 10px 0 20px 0;
+}
+
+.AddTask span {
+    color: red;
+    margin: 0 20px;
+    position: absolute;
+}

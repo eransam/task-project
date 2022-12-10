@@ -30,14 +30,17 @@ class TasksService {
     }
 
     public async addNewTask(Task: TaskModel): Promise<TaskModel> {
-
         // Convert out Task to FormData:
+        
         const formData = new FormData();
         formData.append("title", Task.title);
         formData.append("assigneeName", Task.assigneeName);
-        formData.append("creationDate", Task.creationDate);
-        formData.append("status", Task.status);
+        formData.append("creationDate",Task.creationDate);
         formData.append("image", Task.image.item(0));
+        formData.append("Description", Task.Description);
+        formData.append("RelatedTickets", Task.RelatedTickets);
+        formData.append("status", Task.status);
+        
         console.log("formData in the task service: " , formData);
         
         // Post the new Task to the server: 
@@ -50,25 +53,84 @@ class TasksService {
         return addedTask;
     }
 
-    public async updateTask(Task: TaskModel): Promise<TaskModel> {
 
+    public async addNewTask2(Task: TaskModel): Promise<TaskModel> {
+        // Convert out Task to FormData:
+        
+        const formData = new FormData();
+
+        formData.append("title", "");
+        formData.append("assigneeName", Task.assigneeName);
+        formData.append("creationDate",Task.creationDate);
+        formData.append("image", Task.image.item(0));
+
+
+        formData.append("TaskID", Task.id.toString());
+        formData.append("Description", Task.title);
+        formData.append("RelatedTickets", Task.assigneeName);
+        formData.append("status", Task.status);
+        console.log("formData in the task service: " , formData);
+        
+        // Post the new Task to the server: 
+        const response = await axios.post<TaskModel>("http://localhost:3001/api/tasks2/", formData);
+        const addedTask = response.data;
+
+        // Add to redux global state: 
+        store.dispatch(addTaskAction(addedTask));
+
+        return addedTask;
+    }
+
+
+    public async updateTask(Task: TaskModel): Promise<TaskModel> {
+        
         // Convert out Task to FormData:
         const formData = new FormData();
+        formData.append("id", Task.id.toString());
         formData.append("title", Task.title);
         formData.append("assigneeName", Task.assigneeName);
         formData.append("creationDate", Task.creationDate);
         formData.append("status", Task.status);
+        formData.append("Description", Task.Description);
+        formData.append("RelatedTickets", Task.RelatedTickets);
         formData.append("image", Task.image.item(0));
-
         // Put the new Task to the server: 
         const response = await axios.put<TaskModel>(config.taskUrl + Task.id, formData);
         const updatedTask = response.data;
-
         // Add to redux global state: 
         store.dispatch(updateTaskAction(updatedTask));
-
         return updatedTask;
     }
+
+
+
+    public async updateTask2(Task: TaskModel): Promise<TaskModel> {
+        console.log("Task in updateTask in  task service: " , Task);
+        // console.log("Task.image: " , Task.image);
+
+        // console.log("Task.image.item(0): " , Task.image.item(0));
+
+        
+        // Convert out Task to FormData:
+        const formData = new FormData();
+        formData.append("id", Task.id.toString());
+        formData.append("title", Task.title);
+        formData.append("assigneeName", Task.assigneeName);
+        formData.append("creationDate", Task.creationDate);
+        formData.append("status", Task.status);
+        formData.append("Description", Task.Description);
+        formData.append("RelatedTickets", Task.RelatedTickets);
+        formData.append("imageName", Task.imageName);
+        // Put the new Task to the server: 
+        const response = await axios.post<TaskModel>("http://localhost:3001/api/tasks2/", formData);
+        const updatedTask = response.data;
+        // Add to redux global state: 
+        store.dispatch(updateTaskAction(updatedTask));
+        return updatedTask;
+    }
+
+
+
     
 }
 

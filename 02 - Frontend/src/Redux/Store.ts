@@ -1,12 +1,11 @@
 import { combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { authReducer } from "./AuthState";
-import { productsReducer } from "./ProductsState";
 import { tasksReducer } from "./TasksState";
 
 
 // Creating reducers object from all our reducers: 
-const reducers = combineReducers({ productsState: productsReducer, authState: authReducer, tasksState: tasksReducer });
+const reducers = combineReducers({ authState: authReducer, tasksState: tasksReducer });
 
 // The most important Redux object: 
 

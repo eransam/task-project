@@ -7,7 +7,6 @@ import expressFileUpload from "express-fileupload";
 import cors from "cors";
 import errorsHandler from "./02-middleware/errors-handler";
 import ErrorModel from "./03-models/error-model";
-import productsController from "./06-controllers/products-controller";
 import tasksController from "./06-controllers/tasks-controller";
 
 import config from "./01-utils/config";
@@ -25,7 +24,6 @@ server.use(expressFileUpload());
 const frontendDir = path.join(__dirname, "07-frontend"); // Create full path to frontend directory.
 server.use(express.static(frontendDir)); // Serve index.html when user request root url.
 
-server.use("/api", productsController);
 server.use("/api", tasksController);
 
 

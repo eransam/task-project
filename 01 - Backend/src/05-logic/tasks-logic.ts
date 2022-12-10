@@ -10,9 +10,11 @@ async function getAllTasks(): Promise<TaskModel[]> {
     const sql = `SELECT
                     TaskID AS id,
                     Title AS Title,
-                    AssigneeName AS assigneeName,
-                    CreationDate AS creationDate,
-                    CONCAT(TaskID, '.jpg') AS imageName 
+                    AssigneeName,
+                    CreationDate,
+                    RelatedTickets,
+                    Description,
+                    imageName
                     FROM tasks`;
 
     const tasks = await dal.execute(sql);
@@ -22,10 +24,12 @@ async function getAllTasks(): Promise<TaskModel[]> {
 async function getOneTask(id: number): Promise<TaskModel> {
     const sql = `SELECT 
                     TaskID AS id,
-                    Title AS Title,
-                    AssigneeName AS assigneeName,
-                    CreationDate AS creationDate,
-                    CONCAT(TaskID, '.jpg') AS imageName 
+                    Title,
+                    AssigneeName,
+                    CreationDate,
+                    RelatedTickets,
+                    Description,
+                    imageName 
                     FROM tasks
                     WHERE TaskID = ${id}`;
 
@@ -40,7 +44,7 @@ async function getOneTask(id: number): Promise<TaskModel> {
 
 async function addTask(task: TaskModel): Promise<TaskModel> {
     console.log("task: " ,task);
-
+    task.image;
     const errors = task.validatePost();
     if (errors) throw new ErrorModel(BAD_REQUEST, errors);
     // if (errors) throw new ErrorModel(StatusCode.BadRequest, errors);
@@ -58,8 +62,8 @@ async function addTask(task: TaskModel): Promise<TaskModel> {
       }
 
 
-    const sql = `INSERT INTO tasks(Title, AssigneeName, CreationDate, Status)
-                 VALUES('${task.title}','${task.assigneeName}','${task.creationDate}','${task.status}')`;
+    const sql = `INSERT INTO tasks(Title, AssigneeName, CreationDate, Status,RelatedTickets,Description,imageName)
+                 VALUES('${task.title}','${task.assigneeName}','${task.creationDate}','${task.status}','${task.RelatedTickets}','${task.Description}','${task.imageName}')`;
 
     const info: OkPacket = await dal.execute(sql);
     task.id = info.insertId;
@@ -74,9 +78,10 @@ async function updateFullTask(task: TaskModel): Promise<TaskModel> {
 
     const sql = `UPDATE tasks SET
                  Title = '${task.title}',
-                 AssigneeName = ${task.assigneeName},
-                 CreationDate = ${task.creationDate}
-                 Status = ${task.status}
+                 AssigneeName = '${task.assigneeName}',
+                 Description = '${task.Description}',
+                 RelatedTickets = '${task.RelatedTickets}',
+                 Status = '${task.status}'
                  WHERE TaskID = ${task.id}`;
 
     const info: OkPacket = await dal.execute(sql);

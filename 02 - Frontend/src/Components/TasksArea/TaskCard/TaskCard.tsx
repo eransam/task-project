@@ -11,7 +11,7 @@ function TaskCard(props: TaskCardProps): JSX.Element {
     return (
         <div className="TaskCard Box">
             <div>
-                {props.task.title}
+                title: {props.task.title}
                 <br />
                 assigneeName: {props.task.assigneeName}
                 <br />
@@ -22,6 +22,7 @@ function TaskCard(props: TaskCardProps): JSX.Element {
 
             </div>
             <div>
+                {console.log("config.tasksImageUrl + props.task.imageName: " , config.tasksImageUrl + props.task.imageName)};
                 <NavLink to={"/tasks/details/" + props.task.id}>
                     <img src={config.tasksImageUrl + props.task.imageName} />
                 </NavLink>
