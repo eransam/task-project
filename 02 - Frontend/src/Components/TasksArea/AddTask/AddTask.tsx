@@ -17,13 +17,11 @@ function AddTask(): JSX.Element {
         try {
             const thedate = new Date;
             const stringDate = thedate.toString()
-            Task.creationDate= stringDate;
-            // console.log("Task: " ,Task);
-            // Task.Description ="test";
-            // Task.RelatedTickets ="test";
-            // Task.status = "test";
-            // console.log("Task eran: " ,Task);
+            Task.CreationDate= stringDate;
+
+            console.log("task in submit in addtask: " , Task);
             
+
             await TasksService.addNewTask(Task);
             
             notify.success("Task has been added!");
@@ -43,26 +41,19 @@ function AddTask(): JSX.Element {
 
                 <h2>Add Task</h2>
 
-                <label>title: </label>
-                <input type="text" {...register("title", {
-                    required: { value: true, message: "Missing Task title" }
+                <label>Title: </label>
+                <input type="text" {...register("Title", {
+                    required: { value: true, message: "Missing Task Title" }
                 })} />
-                <span>{formState.errors.title?.message}</span>
+                <span>{formState.errors.Title?.message}</span>
 
 
-                <label>assigneeName: </label>
-                <input type="text" {...register("assigneeName", {
-                    required: { value: true, message: "Missing Task assigneeName" }
+                <label>AssigneeName: </label>
+                <input type="text" {...register("AssigneeName", {
+                    required: { value: true, message: "Missing Task AssigneeName" }
                 })} />
-                <span>{formState.errors.assigneeName?.message}</span>
+                <span>{formState.errors.AssigneeName?.message}</span>
 
-
-
-                {/* <label>status: </label>
-                <input type="text" {...register("status", {
-                    required: { value: true, message: "Missing Task status" }
-                })} />
-                <span>{formState.errors.status?.message}</span> */}
 
 
                 <label>Image: </label>

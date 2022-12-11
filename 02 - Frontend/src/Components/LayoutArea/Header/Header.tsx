@@ -7,7 +7,6 @@ function Header(): JSX.Element {
         <div className="Header">
 
             {/* Display Image */}
-            <Logo />
 
             {/* Auth Menu */}
             <AuthMenu />

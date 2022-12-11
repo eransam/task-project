@@ -4,7 +4,7 @@ class Config {
 
 class DevelopmentConfig extends Config {
     public isDevelopment = true;
-    public mysql = { host: "localhost", user: "root", password: "", database: "task" };
+    public mysql = { host: "localhost", user: "root", password: "", database: "northwind" };
 }
 
 class ProductionConfig extends Config {

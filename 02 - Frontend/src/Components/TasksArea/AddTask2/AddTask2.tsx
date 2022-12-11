@@ -32,17 +32,16 @@ function AddTask2(): JSX.Element {
         try {
             const thedate = new Date;
              const stringDate = thedate.toString()
-             Task.creationDate= stringDate;
-             console.log("stringDate: " ,stringDate);
-             console.log("Task.creationDate: " ,Task.creationDate);
+             Task.CreationDate= stringDate;
+            //  console.log("stringDate: " ,stringDate);
+            //  console.log("Task.creationDate: " ,Task.creationDate);
 
-            console.log("lastElement[0] in the submit: " , lastElement[0]);
+            // console.log("lastElement[0] in the submit: " , lastElement[0]);
             const choseElement = lastElement[0];
-            console.log("choseElement.assigneeName" ,choseElement.assigneeName);
             Task.id = choseElement.id;
-            Task.assigneeName = choseElement.assigneeName;
+            Task.AssigneeName = choseElement.assigneeName;
             Task.imageName =choseElement.imageName;
-            Task.title = choseElement.title;
+            Task.Title = choseElement.title;
             console.log("Task: " ,Task);
             
 
@@ -67,7 +66,7 @@ function AddTask2(): JSX.Element {
 
 
                 <label>status: </label>
-                <input type="text" {...register("status", {
+                <input type="text" {...register("Status", {
                     required: { value: true, message: "Missing Task status" }
                 })} />
                 <span>{formState.errors.status?.message}</span>

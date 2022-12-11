@@ -44,7 +44,7 @@ function Routing(): JSX.Element {
             {/* <Route path="/" element={<Home />} /> */}
 
             {/* Default route - second way: */}
-            <Route path="/" element={<Navigate to="/home" />} />
+            <Route path="/" element={<Navigate to="/tasks" />} />
 
             <Route path="*" element={<PageNotFound />} />
 

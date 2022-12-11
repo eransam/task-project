@@ -51,8 +51,14 @@ export function tasksReducer(currentState = new TasksState(), action: TasksActio
             break;
 
         case TasksActionType.UpdateTask:
-            const indexToUpdate = newState.Tasks.findIndex(p => p.id === action.payload.id); // Here the payload is a single object to update.
+            const indexToUpdate = newState.Tasks.findIndex(p => p.id === Number(action.payload.id)); // Here the payload is a single object to update.
+            console.log("indexToUpdate: " , indexToUpdate);
+            console.log("Tasks in state: " , newState.Tasks);
+            console.log("action.payload in state: " , typeof(action.payload.id));
+
             if (indexToUpdate >= 0) {
+                console.log();
+                
                 newState.Tasks[indexToUpdate] = action.payload;
             }
             break;

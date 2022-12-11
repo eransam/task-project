@@ -10,9 +10,12 @@ import "./UpdateTask.css";
 function UpdateTask(): JSX.Element {
 
     const [user, setUser] = useState<any>(store.getState().authState.user);
+    const [lastElement, setLastElement] = useState<TaskModel[]>([]);
 
     const params = useParams();
     const id = +params.id;
+    console.log("params: " , params);
+    
     var imgName:string = "";
 
     const navigate = useNavigate();
@@ -22,13 +25,15 @@ function UpdateTask(): JSX.Element {
     useEffect(() => {
         tasksService.getOneTask(id)
             .then(task => {
+                console.log("task.Title123: " , task);
+                
                 imgName = task.imageName;
-                setValue("title", task.title);
-                setValue("assigneeName", task.assigneeName);
-                setValue("creationDate", task.creationDate);
-                setValue("status", task.status);
-                setValue("RelatedTickets", task.RelatedTickets);
-                setValue("Description", task.Description);
+                setValue("title", task.Title);
+                setValue("assigneeName", task.AssigneeName);
+                setValue("creationDate", task.CreationDate);
+                setValue("status", task.Status);
+                setValue("relatedTickets", task.RelatedTickets);
+                setValue("description", task.Description);
 
 
                 const unsubscribe = store.subscribe(() => {
@@ -44,8 +49,11 @@ function UpdateTask(): JSX.Element {
 
     async function submit(task: TaskModel) {
         try {
+            
+            task.TaskID = id;
 
-            task.id = id;
+            console.log("task in submit in updatetask: " , task);
+
             const updatedTask =  await tasksService.updateTask(task);
 
             notify.success("Task updated.");
@@ -90,17 +98,17 @@ function UpdateTask(): JSX.Element {
                 })} />
                 <span>{formState.errors.status?.message}</span>
 
-                <label>Description: </label>
-                <input type="text" {...register("Description", {
-                    required: { value: true, message: "Missing task Description" }
+                <label>description: </label>
+                <input type="text" {...register("description", {
+                    required: { value: true, message: "Missing task description" }
                 })} />
-                <span>{formState.errors.Description?.message}</span>
+                <span>{formState.errors.description?.message}</span>
 
-                <label>RelatedTickets: </label>
-                <input type="text" {...register("RelatedTickets", {
-                    required: { value: true, message: "Missing task RelatedTickets" }
+                <label>relatedTickets: </label>
+                <input type="text" {...register("relatedTickets", {
+                    required: { value: true, message: "Missing task relatedTickets" }
                 })} />
-                <span>{formState.errors.RelatedTickets?.message}</span>
+                <span>{formState.errors.relatedTickets?.message}</span>
 
 
                 <label>Image: </label>

@@ -35,6 +35,8 @@ router.post("/tasks", async (request: Request, response: Response, next: NextFun
 
         const addedTasks = await logic.addTask(task)
 
+        console.log("addedTasks in controller: " , addedTasks);
+        
         response.status(201).json(addedTasks);
     }
     catch (err: any) {
@@ -48,6 +50,9 @@ router.post("/tasks2", async (request: Request, response: Response, next: NextFu
         const task = new TaskModel(request.body);
         console.log("task2 in the task controller: " ,task);
         const addedTasks = await logic.updateFullTask(task)
+
+        console.log("addedTasks: " , addedTasks);
+
         response.status(201).json(addedTasks);
     }
     catch (err: any) {
@@ -60,12 +65,18 @@ router.post("/tasks2", async (request: Request, response: Response, next: NextFu
 
 router.put("/tasks/:id", async (request: Request, response: Response, next: NextFunction) => {
     try {
+        console.log("eransma");
         const id = +request.params.id;
         request.body.id = id;
         request.body.image = request.files?.image;
-
+        console.log("request.body: " ,request.body);
+        
         const task = new TaskModel(request.body);
+        console.log("eransma task: " , task);
+
         const updatedTask = await logic.updateFullTask(task);
+        console.log("updatedTask555: " , updatedTask);
+        
         response.json(updatedTask);
     }
     catch (err: any) {
